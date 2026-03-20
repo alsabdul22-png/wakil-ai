@@ -1,0 +1,10 @@
+{
+  "name": "wakil-ai-root",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm start",
+    "start": "npm run build && cd backend && npm start"
+  }
+}
