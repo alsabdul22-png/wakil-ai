@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm install --prefix frontend --legacy-peer-deps && npm install --prefix backend && npm run build"
   publish = "frontend/dist"
   functions = "backend"
 
