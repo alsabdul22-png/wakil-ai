@@ -25,12 +25,12 @@ app.use((req, res, next) => {
 
 const serverless = require('serverless-http');
 
-// Routes
+// Routes (Supporting both local /api and Netlify serverless paths)
 const authRoutes = require('./routes/auth');
 const aiRoutes = require('./routes/ai');
 
-app.use('/api/auth', authRoutes);
-app.use('/api/ai', aiRoutes);
+app.use(['/api/auth', '/auth'], authRoutes);
+app.use(['/api/ai', '/ai'], aiRoutes);
 
 // Health check
 app.get('/', (req, res) => {
