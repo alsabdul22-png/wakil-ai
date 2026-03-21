@@ -6,9 +6,7 @@ import './index.css'
 import axios from 'axios'
 
 // Global: adaptive API URL (Development vs Production)
-const API_BASE_URL = import.meta.env.PROD 
-    ? 'https://DEIN-BACKEND-LINK.onrender.com' // <-- HIER kommt später dein Render-Link rein
-    : ''; // In development, the Vite proxy handles this
+const API_BASE_URL = ''; // Relative for Netlify Functions + Vite Proxy
 
 axios.defaults.baseURL = API_BASE_URL;
 

@@ -23,6 +23,8 @@ app.use((req, res, next) => {
   next();
 });
 
+const serverless = require('serverless-http');
+
 // Routes
 const authRoutes = require('./routes/auth');
 const aiRoutes = require('./routes/ai');
@@ -35,9 +37,13 @@ app.get('/', (req, res) => {
   res.send('Wakil AI Backend is running');
 });
 
-app.listen(PORT, () => {
-  console.log(`[Wakil AI] Core Engine running on Port ${PORT}`);
-  console.log(`[Wakil AI] Active Endpoint: ${process.env.AI_API_URL || 'OpenAI Default'}`);
-  const key = process.env.BARADA_AI_API_KEY || process.env.OPENAI_API_KEY;
-  console.log(`[Wakil AI] Key Check: ${key ? (key.substring(0, 5) + '...') : 'No Key'}`);
-});
+// For local development
+if (process.env.NODE_ENV !== 'production' || !process.env.NETLIFY) {
+    app.listen(PORT, () => {
+      console.log(`[Wakil AI] Core Engine running on Port ${PORT}`);
+      console.log(`[Wakil AI] Active Endpoint: ${process.env.AI_API_URL || 'OpenAI Default'}`);
+    });
+}
+
+module.exports.handler = serverless(app);
+module.exports = app; // For normal imports

@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  publish = "frontend/dist"
+  functions = "backend"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/index/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["express", "serverless-http", "cors", "body-parser", "dotenv"]
