@@ -61,22 +61,12 @@ const Dashboard = () => {
         setLoading(true);
 
         try {
-            const token = localStorage.getItem('token');
-            const res = await axios.post('/api/ai/generate', { prompt: prompt, tool }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await axios.post('/api/ai/generate', { prompt: prompt, tool });
             
             if (res.data && res.data.result) {
                 const newAiMessage = { role: 'ai', content: res.data.result, tool: tool };
                 setMessages(prev => [...prev, newAiMessage]);
-                if (res.data.history) setHistory(res.data.history);
-                if (setUser) {
-                    setUser(prev => ({ 
-                        ...prev, 
-                        credits: res.data.remainingCredits ?? prev.credits, 
-                        history: res.data.history ?? prev.history 
-                    }));
-                }
+                // In Guest mode we don't sync history/credits to DB
             }
         } catch (err) {
             console.error('Generation failed:', err);
@@ -239,19 +229,16 @@ const Dashboard = () => {
                     )}
                 </div>
 
-                {/* Credit Widget */}
-                {sidebarOpen && (
                     <div className="glass" style={{ padding: '1.8rem', borderRadius: '24px', border: '1px solid var(--border)', marginBottom: '1.2rem', background: 'rgba(0,255,136,0.02)' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '0.75rem' }}>
                             <span style={{ fontWeight: '900', color: 'var(--primary)', letterSpacing: '1px' }}>RESOURCES</span>
-                            <span style={{ fontWeight: '900' }}>{user?.credits || 0} / 10 🚀</span>
+                            <span style={{ fontWeight: '900' }}>999 / 999 🚀</span>
                         </div>
                         <div style={{ height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px', overflow: 'hidden', marginBottom: '1.5rem' }}>
-                             <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min((user?.credits / 10) * 100, 100)}%` }} style={{ height: '100%', background: 'linear-gradient(90deg, var(--primary), #fff)', boxShadow: '0 0 15px var(--primary-glow)' }}></motion.div>
+                             <motion.div initial={{ width: 0 }} animate={{ width: '100%' }} style={{ height: '100%', background: 'linear-gradient(90deg, var(--primary), #fff)', boxShadow: '0 0 15px var(--primary-glow)' }}></motion.div>
                         </div>
-                        <button onClick={() => window.open('/pricing')} style={{ width: '100%', background: '#fff', color: '#000', padding: '0.8rem', borderRadius: '12px', fontSize: '0.85rem', fontWeight: '900', border: 'none', cursor: 'pointer', transition: '0.2s' }}>INITIALIZE BOOST</button>
+                        <button style={{ width: '100%', background: '#fff', color: '#000', padding: '0.8rem', borderRadius: '12px', fontSize: '0.85rem', fontWeight: '900', border: 'none', cursor: 'default', transition: '0.2s' }}>INFINITE ACCESS ACTIVE</button>
                     </div>
-                )}
             </aside>
 
             {/* Chat Workspace Main */}
@@ -283,7 +270,7 @@ const Dashboard = () => {
                                     <img src="/logo.png" style={{ height: '120px', width: 'auto', filter: 'drop-shadow(0 0 30px var(--primary-glow))' }} alt="Logo" />
                                     <div style={{ position: 'absolute', inset: 0, background: 'var(--primary)', opacity: 0.05, filter: 'blur(40px)', borderRadius: '50%', zIndex: -1 }}></div>
                                 </div>
-                                <h3 style={{ fontSize: '2.4rem', marginBottom: '1rem', fontWeight: '900' }}>Hello <span className="gradient-text">{user?.name?.split(' ')[0]}</span>, how can <span style={{ color: 'var(--primary)' }}>Wakil</span> help u today?</h3>
+                                <h3 style={{ fontSize: '2.4rem', marginBottom: '1rem', fontWeight: '900' }}>Hello <span className="gradient-text">Guest</span>, how can <span style={{ color: 'var(--primary)' }}>Wakil</span> help u today?</h3>
                                 <div style={{ 
                                     display: 'inline-flex', alignItems: 'center', gap: '1.5rem', padding: '0.8rem 2rem', 
                                     background: 'rgba(255,255,255,0.02)', borderRadius: '50px', border: '1px solid var(--border)',

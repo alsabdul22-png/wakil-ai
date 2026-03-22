@@ -15,15 +15,6 @@ import Privacy from './pages/Privacy';
 import { Mail } from 'lucide-react';
 
 const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth();
-  
-  if (loading) return (
-    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)' }}>
-      <div className="skeleton" style={{ width: '200px', height: '40px' }}></div>
-    </div>
-  );
-  if (!user) return <Navigate to="/login" replace />;
-  
   return children;
 };
 

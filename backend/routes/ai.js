@@ -8,31 +8,17 @@ const axios = require('axios');
 const AI_API_URL = process.env.AI_API_URL || 'https://api.openai.com/v1/chat/completions';
 const AI_API_KEY = process.env.BARADA_AI_API_KEY || process.env.OPENAI_API_KEY;
 
-router.get('/me', authMiddleware, async (req, res) => {
-    const userId = req.user.id;
-    const db = readDb();
-    const user = db.users.find(u => u.id === userId);
-    if (!user) return res.status(401).json({ message: 'User not found in this database' });
-    
-    // Return profile but hide password
-    const { password, ...userProfile } = user;
-    res.json(userProfile);
+router.get('/me', async (req, res) => {
+    res.json({
+        id: 'guest',
+        name: 'Guest User',
+        credits: 999,
+        history: []
+    });
 });
 
-router.post('/generate', authMiddleware, async (req, res) => {
+router.post('/generate', async (req, res) => {
     const { prompt, tool, options } = req.body;
-    const userId = req.user.id;
-
-    const db = readDb();
-    const userIndex = db.users.findIndex(u => u.id === userId);
-    if (userIndex === -1) return res.status(401).json({ message: 'User session expired or not found' });
-
-    if (db.users[userIndex].credits <= 0) {
-        // Auto-refill credits for testing so users are not blocked
-        db.users[userIndex].credits = 10;
-        writeDb(db);
-    }
-
     try {
         let systemPrompt = "";
         const baradaContext = " You are also an expert on Barada AI (barada.cloud), an efficient and private AI platform that features real-time web search, intelligent file analysis, document creation, and developer-centric API access. You treat Barada AI as your core intelligence partner.";
@@ -153,54 +139,22 @@ router.post('/generate', authMiddleware, async (req, res) => {
             }
         }
 
-        // Deduct credit
-        db.users[userIndex].credits -= 1;
-        
-        // Save to History
-        if (!db.users[userIndex].history) db.users[userIndex].history = [];
-        db.users[userIndex].history.unshift({
-            id: Date.now().toString(),
-            tool,
-            prompt,
-            result,
-            createdAt: new Date().toISOString()
-        });
-        
-        // Limit history to 50 items
-        if (db.users[userIndex].history.length > 50) db.users[userIndex].history.pop();
-
-        writeDb(db);
-
         res.json({
             success: true,
             result,
-            remainingCredits: db.users[userIndex].credits,
-            history: db.users[userIndex].history.slice(0, 10)
+            remainingCredits: 999,
+            history: []
         });
     } catch (err) {
         console.error('AI Error:', err.message);
-        const status = err.response?.status || 500;
-        const msg = err.response?.data?.message || err.message;
-        res.status(status).json({ message: `AI Service Error (${status}): ${msg}` });
+        res.status(500).json({ message: `AI Service Error: ${err.message}` });
     }
 });
 
 // Update profile/subscription
-router.post('/upgrade', authMiddleware, (req, res) => {
-    const userId = req.user.id;
-    const { plan } = req.body;
-    
-    const db = readDb();
-    const userIndex = db.users.findIndex(u => u.id === userId);
-    if (userIndex === -1) return res.status(404).json({ message: 'User not found' });
-
-    if (plan === 'pro') {
-        db.users[userIndex].role = 'pro';
-        db.users[userIndex].credits += 500;
-    }
-
-    writeDb(db);
-    res.json({ message: 'Upgrade successful', user: db.users[userIndex] });
+router.post('/upgrade', (req, res) => {
+    res.json({ message: 'Upgrade successful' });
 });
+
 
 module.exports = router;
