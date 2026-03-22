@@ -58,11 +58,11 @@ const Landing = () => {
                         <Link to="/dashboard" className="btn-primary" style={{ height: '4rem', padding: '0 3rem', fontSize: '1.2rem', gap: '1rem' }}>
                             START GENERATING <ArrowRight size={22} />
                         </Link>
-                        <Link to="/pricing" className="glass" style={{ 
+                        <Link to="/dashboard" className="glass" style={{ 
                             height: '4rem', padding: '0 3rem', borderRadius: '15px', fontWeight: 'bold', fontSize: '1.2rem',
                             border: '1px solid var(--border)', display: 'flex', alignItems: 'center'
                         }}>
-                            {t('pricing')}
+                            EXPLORE ENGINE
                         </Link>
                     </div>
 
