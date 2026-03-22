@@ -154,7 +154,7 @@ const Dashboard = () => {
     return (
         <div style={{ display: 'flex', height: 'calc(100vh - 72px)', overflow: 'hidden', background: 'var(--bg)', color: 'var(--text)' }}>
             {/* Sidebar Left */}
-            <aside style={{ width: sidebarOpen ? '280px' : '84px', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', padding: '2rem 1.2rem', background: 'var(--bg-secondary)', transition: 'all 0.4s', zIndex: 100 }}>
+            <aside className="sidebar-content" style={{ width: sidebarOpen ? 'clamp(240px, 15vw, 280px)' : '84px', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', padding: '2rem 1.2rem', background: 'var(--bg-secondary)', transition: 'all 0.4s', zIndex: 100 }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', padding: '0 0.5rem' }}>
                          {sidebarOpen ? (
@@ -244,16 +244,25 @@ const Dashboard = () => {
             {/* Chat Workspace Main */}
             <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative', background: 'var(--bg)' }}>
                 {/* Fixed Header */}
-                <header style={{ padding: '1.5rem 3.5rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(3,8,6,0.8)', backdropFilter: 'blur(20px)', zIndex: 100 }}>
+                <header className="dashboard-header" style={{ 
+                    padding: '1.2rem clamp(1rem, 5vw, 3.5rem)', 
+                    borderBottom: '1px solid var(--border)', 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    background: 'rgba(3,8,6,0.8)', 
+                    backdropFilter: 'blur(20px)', 
+                    zIndex: 100 
+                }}>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.3rem' }}>
-                            <h2 style={{ fontSize: '1.2rem', fontWeight: '900', letterSpacing: '-0.5px' }}>{currentTool.name} <span className="gradient-text">Agent</span></h2>
-                            <div style={{ background: 'var(--primary-light)', padding: '0.25rem 0.6rem', borderRadius: '8px', fontSize: '0.55rem', color: 'var(--primary)', fontWeight: '900', letterSpacing: '1.5px', border: '1px solid var(--border)' }}>LATTICE SYNC LIVE</div>
+                            <h2 style={{ fontSize: 'clamp(1rem, 4vw, 1.2rem)', fontWeight: '900', letterSpacing: '-0.5px' }}>{currentTool.name} <span className="gradient-text">Agent</span></h2>
+                            <div className="sync-badge" style={{ background: 'var(--primary-light)', padding: '0.25rem 0.6rem', borderRadius: '8px', fontSize: '0.55rem', color: 'var(--primary)', fontWeight: '900', letterSpacing: '1.5px', border: '1px solid var(--border)' }}>SYNC LIVE</div>
                         </div>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '500', letterSpacing: '0.5px' }}>Executing via Barada Distributed Neural Architecture v4.2</p>
+                        <p className="subtitle-tech" style={{ fontSize: 'min(0.75rem, 3vw)', color: 'var(--text-muted)', fontWeight: '500', letterSpacing: '0.5px' }}>Barada Distributed Neural Architecture v4.2</p>
                     </div>
                     <button onClick={clearChat} style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.85rem', fontWeight: '700', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0.7 }}>
-                        <Eraser size={18} /> Clear Session
+                        <Eraser size={18} /> <span className="btn-text">Clear</span>
                     </button>
                 </header>
 
@@ -321,7 +330,11 @@ const Dashboard = () => {
                                     initial={{ opacity: 0, x: msg.role === 'user' ? 20 : -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     className={`chat-bubble ${msg.role === 'user' ? 'chat-user' : 'chat-ai'}`}
-                                    style={{ width: msg.role === 'ai' ? '100%' : 'fit-content', padding: msg.role === 'user' ? '1.2rem 1.8rem' : '2.5rem' }}
+                                    style={{ 
+                                        width: msg.role === 'ai' ? '100%' : 'fit-content', 
+                                        padding: msg.role === 'user' ? '1.2rem clamp(1rem, 4vw, 1.8rem)' : 'clamp(1.2rem, 5vw, 2.5rem)',
+                                        borderRadius: '24px'
+                                    }}
                                 >
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', opacity: 0.5 }}>
                                         {msg.role === 'user' ? <User size={18} /> : <Bot size={18} color="var(--primary)" />}
@@ -369,9 +382,9 @@ const Dashboard = () => {
                 </div>
 
                 {/* Input Area Sticky */}
-                <div style={{ padding: '1rem 4rem 4rem', background: 'linear-gradient(transparent, var(--bg) 30%)', zIndex: 10 }}>
+                <div style={{ padding: '1rem clamp(1rem, 5vw, 4rem) clamp(1rem, 5vw, 4rem)', background: 'linear-gradient(transparent, var(--bg) 30%)', zIndex: 10 }}>
                     <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-                        <div className="premium-card" style={{ padding: '0.8rem 1.5rem', borderRadius: '26px', border: '1px solid var(--border-focus)', display: 'flex', alignItems: 'flex-end', gap: '1.2rem', background: 'rgba(8, 18, 14, 0.98)', boxShadow: '0 25px 60px rgba(0,0,0,0.6)' }}>
+                        <div className="premium-card" style={{ padding: '0.8rem clamp(0.8rem, 3vw, 1.5rem)', borderRadius: '26px', border: '1px solid var(--border-focus)', display: 'flex', alignItems: 'flex-end', gap: '1.2rem', background: 'rgba(8, 18, 14, 0.98)', boxShadow: '0 25px 60px rgba(0,0,0,0.6)' }}>
                             <textarea 
                                 value={prompt}
                                 onChange={(e) => setPrompt(e.target.value)}
@@ -380,15 +393,15 @@ const Dashboard = () => {
                                 style={{ background: 'transparent', border: 'none', resize: 'none', padding: '1rem 0.5rem', minHeight: '58px', maxHeight: '200px', fontSize: '1.05rem', fontWeight: '500', color: '#fff' }}
                             />
                             <div style={{ paddingBottom: '0.6rem', display: 'flex', gap: '1rem' }}>
-                                <button onClick={handleGenerate} disabled={loading || !prompt.trim()} className="btn-primary" style={{ padding: '0 1.8rem', height: '48px', borderRadius: '16px', fontSize: '1rem', opacity: (loading || !prompt.trim()) ? 0.3 : 1 }}>
+                                <button onClick={handleGenerate} disabled={loading || !prompt.trim()} className="btn-primary" style={{ padding: '0 clamp(1rem, 3vw, 1.8rem)', height: '48px', borderRadius: '16px', fontSize: '1rem', opacity: (loading || !prompt.trim()) ? 0.3 : 1 }}>
                                     {loading ? <Loader2 className="animate-spin" size={22} /> : <><Send size={20} /></>}
                                 </button>
                             </div>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '2.5rem', marginTop: '1.8rem', color: 'var(--text-muted)', fontSize: '0.65rem', fontWeight: '900', letterSpacing: '2px', opacity: 0.5 }}>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><ShieldCheck size={14} color="var(--primary)" /> BARADA CLOUD SECURED</span>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><ShieldCheck size={14} color="var(--primary)" /> ISO/IEC 27001 CLOUD</span>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><ShieldCheck size={14} color="var(--primary)" /> ZERO-KNOWLEDGE ARCHITECTURE</span>
+                        <div className="footer-badges" style={{ display: 'flex', justifyContent: 'center', gap: 'min(2.5rem, 5vw)', marginTop: '1.8rem', color: 'var(--text-muted)', fontSize: '0.65rem', fontWeight: '900', letterSpacing: '2px', opacity: 0.5, flexWrap: 'wrap' }}>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><ShieldCheck size={14} color="var(--primary)" /> <span className="badge-text">BARADA CLOUD SECURED</span></span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><ShieldCheck size={14} color="var(--primary)" /> <span className="badge-text">ISO/IEC 27001 CLOUD</span></span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><ShieldCheck size={14} color="var(--primary)" /> <span className="badge-text">ZERO-KNOWLEDGE AUTH</span></span>
                         </div>
                     </div>
                 </div>
@@ -396,7 +409,7 @@ const Dashboard = () => {
 
             {/* Sidebar Right: Context & History */}
             {sidebarOpen && (
-                <aside style={{ width: '360px', borderLeft: '1px solid var(--border)', background: 'var(--bg-secondary)', padding: '3rem 1.8rem', display: 'flex', flexDirection: 'column' }}>
+                <aside className="sidebar-content" style={{ width: 'clamp(300px, 20vw, 360px)', borderLeft: '1px solid var(--border)', background: 'var(--bg-secondary)', padding: '3rem 1.8rem', display: 'flex', flexDirection: 'column' }}>
                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem', borderBottom: '1px solid var(--border)', paddingBottom: '1.8rem' }}>
                         <History size={24} color="var(--primary)" />
                         <h3 style={{ fontSize: '1.2rem', fontWeight: '900', letterSpacing: '1px' }}>STRATEGIC <span className="gradient-text">ARCHIVE</span></h3>

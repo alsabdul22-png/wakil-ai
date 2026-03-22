@@ -116,6 +116,7 @@ h1, h2, h3, h4, .font-heading {
 .gradient-text {
   background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -214,8 +215,53 @@ input:focus, textarea:focus {
   height: calc(100vh - 72px);
 }
 
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
+  .container { padding: 0 1.5rem; }
   .dashboard-grid {
-    grid-template-columns: 80px 1fr 0px;
+    grid-template-columns: 80px 1fr;
   }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - 72px);
+  }
+  
+  .premium-card {
+    padding: 1.5rem;
+    border-radius: 18px;
+  }
+  
+  h1 { font-size: 2.5rem !important; }
+  
+  .btn-primary {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .chat-bubble {
+    max-width: 95%;
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+
+  /* Hide sidebar content on mobile if necessary */
+  .sidebar-content {
+      display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 1rem; }
+  h1 { font-size: 2rem !important; }
+  .btn-primary { width: 100%; justify-content: center; }
+}
+
+/* Aspect Ratio Utilities */
+.aspect-16-9 {
+    aspect-ratio: 16 / 9;
 }
