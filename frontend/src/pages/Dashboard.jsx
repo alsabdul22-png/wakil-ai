@@ -119,23 +119,23 @@ const Dashboard = () => {
                                     <div style={{ background: 'var(--primary)', padding: '0.4rem', borderRadius: '6px', display: 'flex' }}><Sparkles size={14} color="black" /></div>
                                     <h4 style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--primary)', letterSpacing: '2px' }}>{title.toUpperCase()}</h4>
                                 </div>
-                                <div style={{ fontSize: '1.05rem', lineHeight: '1.8', whiteSpace: 'pre-wrap', color: 'var(--text)' }}>
+                                <div style={{ fontSize: '0.95rem', lineHeight: '1.7', whiteSpace: 'pre-wrap', color: 'var(--text)' }}>
                                     {body}
                                 </div>
                             </motion.div>
                         );
                     }) : (
-                        <div style={{ whiteSpace: 'pre-wrap', fontSize: '1.05rem', lineHeight: '1.7', color: 'var(--text)' }}>{content}</div>
+                        <div style={{ whiteSpace: 'pre-wrap', fontSize: '0.95rem', lineHeight: '1.7', color: 'var(--text)' }}>{content}</div>
                     )}
                     
                     {imageMatch && (
                         <motion.div 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            style={{ marginTop: '1.5rem', borderRadius: '24px', overflow: 'hidden', border: '2px solid var(--primary)', boxShadow: '0 0 40px var(--primary-glow)', background: '#000' }}
+                            style={{ marginTop: '1.5rem', borderRadius: '24px', overflow: 'hidden', border: '2px solid var(--primary)', boxShadow: '0 0 40px var(--primary-glow)', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                         >
-                             <img src={imageMatch[1]} alt="AI Generated Canvas" style={{ width: '100%', display: 'block', minHeight: '300px' }} />
-                             <div style={{ background: 'var(--primary)', padding: '0.8rem 1.4rem', color: 'black', fontWeight: '900', fontSize: '0.75rem', textAlign: 'center', letterSpacing: '2px' }}>
+                             <img src={imageMatch[1]} alt="AI Generated Canvas" style={{ width: '100%', maxHeight: '65vh', objectFit: 'contain', display: 'block', background: '#000' }} />
+                             <div style={{ width: '100%', background: 'var(--primary)', padding: '0.8rem 1.4rem', color: 'black', fontWeight: '900', fontSize: '0.75rem', textAlign: 'center', letterSpacing: '2px' }}>
                                 <ImageIcon size={14} style={{ marginRight: '0.6rem', verticalAlign: 'middle' }} /> SECURED LEGENDARY CANVAS DEPLOYED
                              </div>
                         </motion.div>
@@ -334,7 +334,7 @@ const Dashboard = () => {
                                     initial={{ opacity: 0, x: msg.role === 'user' ? 20 : -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     className={`chat-bubble ${msg.role === 'user' ? 'chat-user' : 'chat-ai'}`}
-                                    style={{ width: msg.role === 'ai' ? '94%' : 'fit-content', padding: msg.role === 'user' ? '1.5rem 2rem' : '2.5rem' }}
+                                    style={{ width: msg.role === 'ai' ? '100%' : 'fit-content', padding: msg.role === 'user' ? '1.2rem 1.8rem' : '2.5rem' }}
                                 >
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', opacity: 0.5 }}>
                                         {msg.role === 'user' ? <User size={18} /> : <Bot size={18} color="var(--primary)" />}

@@ -12,7 +12,7 @@ router.get('/me', authMiddleware, async (req, res) => {
     const userId = req.user.id;
     const db = readDb();
     const user = db.users.find(u => u.id === userId);
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) return res.status(401).json({ message: 'User not found in this database' });
     
     // Return profile but hide password
     const { password, ...userProfile } = user;
@@ -25,7 +25,7 @@ router.post('/generate', authMiddleware, async (req, res) => {
 
     const db = readDb();
     const userIndex = db.users.findIndex(u => u.id === userId);
-    if (userIndex === -1) return res.status(404).json({ message: 'User not found' });
+    if (userIndex === -1) return res.status(401).json({ message: 'User session expired or not found' });
 
     if (db.users[userIndex].credits <= 0) {
         // Auto-refill credits for testing so users are not blocked
@@ -53,11 +53,58 @@ router.post('/generate', authMiddleware, async (req, res) => {
         } else {
             systemPrompt = "You are an AI assistant for solopreneurs. Structure your response into logical parts using '### TITLE'. " + baradaContext;
         }
+
         let result = "";
         let isMock = false;
+
+        // --- 1. HUGGING FACE INFERENCE API (FREE & HIGH QUALITY) ---
+        if (tool === "image" && process.env.HUGGINGFACE_API_KEY && process.env.HUGGINGFACE_API_KEY !== 'YOUR_HF_API_KEY_HERE') {
+            try {
+                const { HfInference } = require('@huggingface/inference');
+                const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
+                
+                // Wir schicken den Request an Hugging Face - als Blob!
+                const blob = await hf.textToImage({
+                    model: 'black-forest-labs/FLUX.1-schnell',
+                    inputs: prompt
+                });
+                
+                // Konvertiere das Bild in Base64
+                const arrayBuffer = await blob.arrayBuffer();
+                const base64Image = Buffer.from(arrayBuffer).toString('base64');
+                const imageSrc = `data:${blob.type || 'image/jpeg'};base64,${base64Image}`;
+                
+                result = `### AI GENERATED CANVAS\n\nI have generated a high-quality visualization using Hugging Face FLUX.1 for: "${prompt}".\n\n![IMAGE](${imageSrc})`;
+            } catch (imgErr) {
+                console.warn('[Wakil AI] Hugging Face Image Call failed:', imgErr.message);
+            }
+        }
         
-        // Real API Call if KEY exists
-        if (AI_API_KEY && AI_API_KEY !== 'YOUR_API_KEY_HERE') {
+        // --- 2. OPENAI IMAGE GENERATION (DALL-E 3) Fallback or primary if HF not set ---
+        if (!result && tool === "image" && process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'YOUR_OPENAI_API_KEY_HERE') {
+             try {
+                 const response = await axios.post('https://api.openai.com/v1/images/generations', {
+                     model: "dall-e-3",
+                     prompt: prompt,
+                     n: 1,
+                     size: "1024x1024"
+                 }, {
+                     headers: {
+                         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                         'Content-Type': 'application/json'
+                     },
+                     timeout: 45000
+                 });
+                 const imageUrl = response.data.data[0].url;
+                 result = `### AI GENERATED CANVAS\n\nI have generated a high-quality visualization using OpenAI DALL-E 3 for: "${prompt}".\n\n![IMAGE](${imageUrl})`;
+             } catch (imgErr) {
+                 console.warn('[Wakil AI] OpenAI Image Call failed:', imgErr.message);
+                 // Fallback to Barada + Pollinations logic below
+             }
+        }
+
+        // --- 2. BARADA AI CHAT (or Pollinations Fallback for Image if OpenAI failed/missing) ---
+        if (!result && AI_API_KEY && AI_API_KEY !== 'YOUR_API_KEY_HERE') {
             try {
                 const response = await axios.post(AI_API_URL, {
                     model: "barada-1",
@@ -75,6 +122,14 @@ router.post('/generate', authMiddleware, async (req, res) => {
                     timeout: 30000
                 });
                 result = response.data.choices[0].message.content;
+                
+                // FORCE perfect Pollinations image generation if no OpenAI key was used
+                if (tool === "image") {
+                    result = result.replace(/!\[.*?\]\(.*?\)/g, '');
+                    const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt + ' realistic, high quality, 8k, ultra detailed')}`;
+                    result += `\n\n![IMAGE](${imageUrl})`;
+                }
+
             } catch (apiErr) {
                 console.warn('[Wakil AI] API Call failed:', apiErr.message);
                 if (apiErr.response) {
@@ -83,7 +138,7 @@ router.post('/generate', authMiddleware, async (req, res) => {
                 }
                 isMock = true;
             }
-        } else {
+        } else if (!result) {
             isMock = true;
         }
 

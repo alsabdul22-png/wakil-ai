@@ -6,7 +6,7 @@ import './index.css'
 import axios from 'axios'
 
 // Global: adaptive API URL (Development vs Production)
-const API_BASE_URL = ''; // Relative for Netlify Functions + Vite Proxy
+const API_BASE_URL = import.meta.env.MODE === 'development' ? '' : 'https://wakilai-backend-production.up.railway.app';
 
 axios.defaults.baseURL = API_BASE_URL;
 
