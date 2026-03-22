@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import PricingPage from './pages/PricingPage';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import SyriaProject from './pages/SyriaProject';
 import { Mail } from 'lucide-react';
 
 const ProtectedRoute = ({ children }) => {
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/pricing" element={<PricingPage />} />
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/syria-project" element={<SyriaProject />} />
                     <Route path="/dashboard" element={
                         <ProtectedRoute>
                         <Dashboard />
