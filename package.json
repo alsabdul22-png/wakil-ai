@@ -5,7 +5,8 @@
     "build": "cd frontend && npm run build",
     "frontend": "cd frontend && npm run dev",
     "backend": "cd backend && npm start",
-    "start": "npm run build && cd backend && npm start"
+    "start": "npm run build && cd backend && npm start",
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\""
   },
   "dependencies": {
     "body-parser": "^2.2.2",
@@ -13,5 +14,8 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
