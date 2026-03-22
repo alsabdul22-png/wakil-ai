@@ -118,19 +118,11 @@ const Navbar = () => {
                         </AnimatePresence>
                     </div>
 
-                    {user ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
-                            <Link to="/dashboard" className="btn-primary" style={{ padding: '0.6rem 1.4rem', fontSize: '0.85rem' }}>
-                                <LayoutDashboard size={16} /> Dashboard
-                            </Link>
-                            <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}><LogOut size={20} /></button>
-                        </div>
-                    ) : (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                            <Link to="/login" style={{ textDecoration: 'none', color: '#fff', fontSize: '0.9rem', fontWeight: 'bold' }}>Login</Link>
-                            <Link to="/register" className="btn-primary" style={{ padding: '0.6rem 1.4rem', fontSize: '0.85rem' }}>Get Started</Link>
-                        </div>
-                    )}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
+                        <Link to="/dashboard" className="btn-primary" style={{ padding: '0.6rem 2rem', fontSize: '0.9rem', fontWeight: '900' }}>
+                             LAUNCH DASHBOARD <ArrowRight size={16} style={{ marginLeft: '0.4rem' }} />
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Mobile Menu Toggle */}

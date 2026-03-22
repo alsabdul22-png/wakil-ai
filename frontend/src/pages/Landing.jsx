@@ -55,8 +55,8 @@ const Landing = () => {
                     </p>
                     
                     <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <Link to="/register" className="btn-primary" style={{ height: '4rem', padding: '0 3rem', fontSize: '1.2rem', gap: '1rem' }}>
-                            {t('start')} <ArrowRight size={22} />
+                        <Link to="/dashboard" className="btn-primary" style={{ height: '4rem', padding: '0 3rem', fontSize: '1.2rem', gap: '1rem' }}>
+                            START GENERATING <ArrowRight size={22} />
                         </Link>
                         <Link to="/pricing" className="glass" style={{ 
                             height: '4rem', padding: '0 3rem', borderRadius: '15px', fontWeight: 'bold', fontSize: '1.2rem',
@@ -167,8 +167,8 @@ const Landing = () => {
                         <div>
                             <h4 style={{ color: 'var(--primary)', fontWeight: '900', fontSize: '0.75rem', letterSpacing: '2px', marginBottom: '1.5rem' }}>PLATFORM</h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.9rem' }}>
-                                <Link to="/pricing" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Pricing</Link>
-                                <Link to="/register" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Get Started</Link>
+                                <Link to="/dashboard" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Launch Studio</Link>
+                                <Link to="/dashboard" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Get Started</Link>
                                 <a href="https://barada.cloud" target="_blank" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Barada Cloud</a>
                             </div>
                         </div>

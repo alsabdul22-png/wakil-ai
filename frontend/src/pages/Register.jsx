@@ -13,6 +13,10 @@ const Register = () => {
     const { signup } = useAuth();
     const navigate = useNavigate();
 
+    React.useEffect(() => {
+        navigate('/dashboard');
+    }, [navigate]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
