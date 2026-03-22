@@ -81,9 +81,9 @@ const Dashboard = () => {
         if (!content || typeof content !== 'string') return null;
 
         try {
-            // Image Detection: ![alt](url)
-            const imageMatch = content.match(/!\[.*?\]\((.*?)\)/);
-            const textWithoutImage = content.replace(/!\[.*?\]\((.*?)\)/g, '').trim();
+            // Ultimate Image Detection: Support any image markdown anywhere
+            const imageMatch = Array.from(content.matchAll(/!\[.*?\]\((.*?)\)/g))[0];
+            const textWithoutImage = content.replace(/!\[.*?\]\(.*?\)/g, '').trim();
 
             const sections = textWithoutImage.split('###').filter(s => s.trim() !== '');
 
