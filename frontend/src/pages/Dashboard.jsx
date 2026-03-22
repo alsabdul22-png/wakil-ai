@@ -152,7 +152,7 @@ const Dashboard = () => {
     const clearChat = () => setMessages([]);
 
     return (
-        <div style={{ display: 'flex', height: 'calc(100vh - 72px)', overflow: 'hidden', background: 'var(--bg)', color: 'var(--text)' }}>
+        <div className="dashboard-grid" style={{ display: 'flex', minHeight: 'calc(100dvh - 72px)', height: 'calc(100dvh - 72px)', overflow: 'hidden', background: 'var(--bg)', color: 'var(--text)' }}>
             {/* Sidebar Left */}
             <aside className="sidebar-content" style={{ width: sidebarOpen ? 'clamp(240px, 15vw, 280px)' : '84px', borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', padding: '2rem 1.2rem', background: 'var(--bg-secondary)', transition: 'all 0.4s', zIndex: 100 }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>

@@ -225,10 +225,11 @@ input:focus, textarea:focus {
 
 @media (max-width: 768px) {
   .dashboard-grid {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    min-height: calc(100vh - 72px);
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: calc(100dvh - 72px) !important;
+    overflow-y: auto !important;
   }
   
   .premium-card {
