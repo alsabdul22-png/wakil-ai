@@ -30,8 +30,8 @@ const boxOptions = {
 function showBanner() {
     console.clear();
     console.log(
-        chalk.cyan(
-            figlet.textSync('Wakil AI', { horizontalLayout: 'full', font: 'ANSI Shadow' })
+        chalk.green(
+            figlet.textSync('وكيل AI HDR', { horizontalLayout: 'full', font: 'ANSI Shadow' })
         )
     );
     console.log(chalk.gray.bold('                      Powered by Barada AI Strategic Engine\n'));
@@ -227,7 +227,7 @@ const ai = program.command('ai');
 
 ai
   .command('Start')
-  .description('Launch the Wakil AI strategic engine')
+  .description('Launch the وكيل AI HDR strategic engine')
   .action(() => {
     showBanner();
     mainMenu();
