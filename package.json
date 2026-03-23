@@ -16,6 +16,14 @@
     "serverless-http": "^4.0.0"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "axios": "^1.13.6",
+    "boxen": "^5.1.2",
+    "chalk": "^4.1.2",
+    "clipboardy": "^2.3.0",
+    "commander": "^14.0.3",
+    "concurrently": "^9.2.1",
+    "figlet": "^1.6.0",
+    "inquirer": "^8.2.5",
+    "ora": "^5.4.1"
   }
 }
