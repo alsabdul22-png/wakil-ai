@@ -1,70 +1,60 @@
-# وكيل AI HDR - Strategic Terminal Agent 🚀
+# Wakil AI - Terminal Strategic Engine 🚀
 
-**وكيل AI HDR** is a professional-grade, terminal-first AI agent designed for solopreneurs, web architects, and brand strategists. Powered by the high-performance **Barada AI Engine**, it provides a seamless bridge between strategic thinking and tactical execution directly from your command line.
-
----
-
-## 💎 Features
-- **Modern Interactive CLI**: Stunning 3D ASCII interface with color-coded service menus.
-- **AI Strategic Chat**: Real-time interactive conversation with "System Output" panels.
-- **Automated Brand Assets**: Generate high-fidelity images and strategy documents automatically.
-- **Encrypted Communication**: Dispatch secure notifications and emails via Barada SMTP Relay.
-- **Dashboard Integration**: Instant synchronization with the web-based growth dashboard.
+**Wakil AI** is a professional-grade, terminal-first AI agent powered by **Brda AI**. It provides a seamless bridge between strategic thinking and tactical execution directly from your command line.
 
 ---
 
 ## 🛠 Installation
 
-Ensuring your workspace is optimized for the strategic engine:
+Ensuring your workspace is optimized:
 
 ```bash
-# Clone or enter the project directory
+# Enter the project directory
 cd "Wakil ai"
 
 # Install core dependencies
 npm install
-
-# Global activation (Optional)
-npm link
 ```
 
 ---
 
 ## 🚀 Rapid Start (Copy & Paste)
 
-Copy the block below and paste it into your terminal to launch the agent immediately:
+Copy and paste this command into your terminal to launch the agent immediately:
 
 ```powershell
-cd "Wakil ai"; .\وكيل ai Start
+.\cll
+```
+
+Or use the Arabic command:
+```powershell
+.\وكيل AI start
 ```
 
 ---
 
-## 📂 CLI Command Reference
+## 📂 Features & Services
 
-| Command | Description |
+| Service | Description |
 |---------|-------------|
-| `.\وكيل ai Start` | **Launch Interactive HDR Engine** (Primary) |
-| `.\وكيل stats` | View real-time system usage & metrics |
-| `.\وكيل open-outputs` | Open the archived assets folder in Explorer |
-| `.\وكيل create-dashboard` | Generate a secure link to the web lattice |
+| **AI Chat (A)** | Enter a real-time neural link for project brainstorming. |
+| **Generate Image (B)** | Synthesize cinematic visuals for your branding. |
+| **Send Email (C)** | Dispatch encrypted strategic messages. |
+| **Web Dashboard (D)** | Launch the official growth dashboard at [Wakil-rd.de](https://Wakil-rd.de/dashboard). |
+| **Other Actions (E)** | View metrics and manage your archived assets. |
 
-### 💡 Example Interactive Flows:
-1. **AI Chat (Option A)**: Enter the neural link for project brainstorming.
-2. **Generate Image (Option B)**: Synthesize cinematic visuals for your branding.
-3. **Send Email (Option C)**: Dispatch encrypted strategic packets to partners.
+---
+
+## 📂 Assets & Output
+All generated assets (images/text) are securely archived in the:
+- `outputs/images/`
+- `outputs/text/`
 
 ---
 
 ## 🔒 Security & Performance
-- **RSA-4096 / AES-256** standard encryption active on all data transmissions.
-- **99.99% Uptime** via Barada Neural Lattice distributed nodes.
-
----
-
-## 👨‍💻 Credits
-- **Developer**: Google Deepmind Antigravity Team
-- **Intelligence**: Barada AI (barada.cloud)
+- **RSA-4096 / AES-256** encryption active on all data.
+- **Powered by Brda AI Core**.
 
 ---
 

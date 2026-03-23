@@ -9,18 +9,19 @@ const clipboard = require('clipboardy');
 const figlet = require('figlet');
 const inquirer = require('inquirer');
 const boxen = require('boxen');
-const { spawn } = require('child_process');
+const { spawn, exec } = require('child_process');
 
 const program = new Command();
 
-// Config - default local or environment
+// Config
 const API_URL = process.env.WAKIL_API_URL || 'http://localhost:5001/api';
+const DASHBOARD_URL = 'https://Wakil-rd.de/dashboard';
 
 const boxOptions = {
     padding: 1,
     margin: 1,
     borderStyle: 'double',
-    borderColor: 'cyan',
+    borderColor: 'green',
     backgroundColor: '#000000'
 };
 
@@ -31,28 +32,18 @@ function showBanner() {
     console.clear();
     console.log(
         chalk.green(
-            figlet.textSync('وكيل AI HDR', { horizontalLayout: 'full', font: 'ANSI Shadow' })
+            figlet.textSync('Wakil AI', { horizontalLayout: 'full', font: 'ANSI Shadow' })
         )
     );
-    console.log(chalk.gray.bold('                      Powered by Barada AI Strategic Engine\n'));
+    console.log(chalk.green.bold('                      Powered by Brda AI\n'));
 }
 
 /**
- * Typewriter Simulation
+ * Open URL in browser (Cross-platform)
  */
-async function typewriter(text) {
-    return new Promise((resolve) => {
-        let i = 0;
-        const interval = setInterval(() => {
-            process.stdout.write(text[i]);
-            i++;
-            if (i >= text.length) {
-                clearInterval(interval);
-                process.stdout.write('\n');
-                resolve();
-            }
-        }, 15);
-    });
+function openUrl(url) {
+    const start = process.platform === 'win32' ? 'start' : process.platform === 'darwin' ? 'open' : 'xdg-open';
+    exec(`${start} ${url}`);
 }
 
 /**
@@ -65,11 +56,12 @@ async function mainMenu() {
             name: 'choice',
             message: chalk.white.bold('Choose a strategic service:'),
             choices: [
-                { name: chalk.green('A - AI Chat (Text Conversation)'), value: 'A' },
+                { name: chalk.green('A - AI Chat'), value: 'A' },
                 { name: chalk.yellow('B - Generate Image'), value: 'B' },
                 { name: chalk.blue('C - Send Email'), value: 'C' },
-                { name: chalk.magenta('D - Other Actions'), value: 'D' },
-                { name: chalk.red('X - Termination Sequence (Exit)'), value: 'X' }
+                { name: chalk.magenta('D - Launch Web Dashboard'), value: 'D' },
+                { name: chalk.cyan('E - Other Actions'), value: 'E' },
+                { name: chalk.red('X - Exit'), value: 'X' }
             ]
         }
     ]);
@@ -78,7 +70,12 @@ async function mainMenu() {
         case 'A': await handleChat(); break;
         case 'B': await handleImage(); break;
         case 'C': await handleEmail(); break;
-        case 'D': await handleOthers(); break;
+        case 'D': 
+            console.log(chalk.cyan(`\nOpening dashboard on ${DASHBOARD_URL}...`));
+            openUrl(DASHBOARD_URL);
+            setTimeout(mainMenu, 2000);
+            break;
+        case 'E': await handleOthers(); break;
         case 'X': process.exit(0);
     }
 }
@@ -88,23 +85,19 @@ async function mainMenu() {
  */
 async function handleChat() {
     console.log(chalk.cyan('\n[SYSTEM] NEURAL LINK ESTABLISHED. Type "/back" to return to menu.\n'));
-    
     while (true) {
         const { prompt } = await inquirer.prompt([{ type: 'input', name: 'prompt', message: chalk.white.bold('You > ') }]);
         if (prompt.toLowerCase() === '/back') break;
-
-        const spinner = ora('Processing via Barada Cloud...').start();
+        const spinner = ora('Processing via Brda AI...').start();
         try {
             const res = await axios.post(`${API_URL}/ai/generate`, { prompt, tool: 'brand' });
             spinner.stop();
-            
             const result = res.data.result;
             console.log(boxen(chalk.white(result), { ...boxOptions, title: 'SYSTEM OUTPUT', titleAlignment: 'center' }));
-            
             clipboard.writeSync(result);
             console.log(chalk.gray('✨ Copied to clipboard.\n'));
         } catch (err) {
-            spinner.fail('Connection to Neural Lattice Failed.');
+            spinner.fail('Connection to Brda AI Failed.');
             console.error(chalk.red(err.message));
         }
     }
@@ -115,40 +108,27 @@ async function handleChat() {
  * Option B: Generate Image
  */
 async function handleImage() {
-    const { description, style, size } = await inquirer.prompt([
+    const { description, style } = await inquirer.prompt([
         { type: 'input', name: 'description', message: 'Enter visual description:' },
         { 
             type: 'list', 
             name: 'style', 
             message: 'Select visual style:',
-            choices: ['Cinematic', 'Realistic', '3D Render', 'Artistic', 'Cyberpunk']
-        },
-        { 
-            type: 'list', 
-            name: 'size', 
-            message: 'Select resolution:',
-            choices: ['1024x1024', '512x512', 'HD']
+            choices: ['Cinematic', 'Realistic', '3D Render', 'Cyberpunk']
         }
     ]);
-
-    const finalPrompt = `${description}, ${style} style, ${size}`;
     const spinner = ora('Synthesizing Visual Asset...').start();
-    
     try {
-        const res = await axios.post(`${API_URL}/ai/generate`, { prompt: finalPrompt, tool: 'image' });
+        const res = await axios.post(`${API_URL}/ai/generate`, { prompt: `${description}, ${style} style`, tool: 'image' });
         const imageUrl = res.data.result.match(/!\[IMAGE\]\((.*?)\)/)?.[1];
-
         if (!imageUrl) throw new Error('Visual projection failed.');
-
         const outPath = path.join(process.cwd(), 'outputs', 'images');
         if (!fs.existsSync(outPath)) fs.mkdirSync(outPath, { recursive: true });
         const fileName = `asset_${Date.now()}.png`;
         const filePath = path.join(outPath, fileName);
-        
         const writer = fs.createWriteStream(filePath);
         const response = await axios({ url: imageUrl, method: 'GET', responseType: 'stream' });
         response.data.pipe(writer);
-
         writer.on('finish', () => {
             spinner.succeed('Visual Asset Ready.');
             const isDataUrl = imageUrl.startsWith('data:');
@@ -158,7 +138,6 @@ async function handleImage() {
         });
     } catch (err) {
         spinner.fail('Generation interrupted.');
-        console.error(err.message);
         mainMenu();
     }
 }
@@ -169,19 +148,17 @@ async function handleImage() {
 async function handleEmail() {
     const { email, content } = await inquirer.prompt([
         { type: 'input', name: 'email', message: 'Recipient Email:' },
-        { type: 'editor', name: 'content', message: 'Compose your strategic message:' }
+        { type: 'input', name: 'content', message: 'Email Content:' }
     ]);
-
-    const spinner = ora('Dispatching encrypted packet...').start();
+    const spinner = ora('Dispatching encrypted packet via Brda SMTP...').start();
     setTimeout(() => {
         spinner.succeed(`Secure Communication Dispatched to ${email}`);
-        console.log(chalk.green('✔ SMTP RELAY: Barada Secure Gateway Active\n'));
         mainMenu();
     }, 2000);
 }
 
 /**
- * Option D: Others
+ * Option E: Others
  */
 async function handleOthers() {
     const { action } = await inquirer.prompt([
@@ -189,26 +166,15 @@ async function handleOthers() {
             type: 'list',
             name: 'action',
             message: 'Extended Actions:',
-            choices: [
-                'Show Usage Statistics',
-                'Launch Web Dashboard',
-                'Open Outputs Folder',
-                'Back'
-            ]
+            choices: ['Show Usage Statistics', 'Open Outputs Folder', 'Back']
         }
     ]);
-
     if (action === 'Show Usage Statistics') {
         console.log(boxen(`Active Users: 1,248\nGenerations: 15,902\nUptime: 99.99%`, { ...boxOptions, title: 'METRICS' }));
         mainMenu();
-    } else if (action === 'Launch Web Dashboard') {
-        console.log(chalk.green('✔ DASHBOARD LIVE: http://localhost:5173/dashboard'));
-        mainMenu();
     } else if (action === 'Open Outputs Folder') {
         const outPath = path.join(process.cwd(), 'outputs');
-        const cmd = process.platform === 'win32' ? 'explorer' : 'open';
-        spawn(cmd, [outPath]);
-        console.log(chalk.green('✔ Folder opened.'));
+        openUrl(outPath);
         mainMenu();
     } else {
         mainMenu();
@@ -218,27 +184,28 @@ async function handleOthers() {
 program
   .name('wakil')
   .description('Wakil AI - Terminal Strategic Engine')
-  .version('1.1.0');
+  .version('1.2.0');
 
-/**
- * Subcommand: ai
- */
-const ai = program.command('ai');
-
-ai
-  .command('Start')
-  .description('Launch the وكيل AI HDR strategic engine')
-  .action(() => {
+// Unified start command logic
+const startAction = () => {
     showBanner();
     mainMenu();
-  });
+};
 
-// Support for direct commands as well
-program.command('stats').action(() => handleOthers());
-program.command('open-outputs').action(() => {
-    const outPath = path.join(process.cwd(), 'outputs');
-    const cmd = process.platform === 'win32' ? 'explorer' : 'open';
-    spawn(cmd, [outPath]);
+program.command('ai').command('Start').action(startAction);
+program.command('start').action(startAction);
+program.command('CLL').action(startAction);
+program.command('cll').action(startAction);
+
+// Support for legacy/direct calls
+program.on('command:*', function () {
+    const cmd = program.args.join(' ').toLowerCase();
+    if (cmd.includes('start') || cmd.includes('cll')) {
+        startAction();
+    }
 });
 
 program.parse(process.argv);
+if (!process.argv.slice(2).length) {
+    startAction();
+}
