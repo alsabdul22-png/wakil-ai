@@ -1,5 +1,23 @@
 {
-  "framework": "nextjs",
-  "buildCommand": "next build",
-  "outputDirectory": ".next"
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "**/*.{html,css,js,png,jpg,jpeg,svg,gif,json}",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
 }

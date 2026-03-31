@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Elvrona Group</title>
+    <meta name="description" content="Contact Elvrona Group for strategic partnerships, neural architecture research, or infrastructure inquiries.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Link to Elvrona Styles -->
+    <link rel="stylesheet" href="elvrona-group/style.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="glow-container">
+        <div class="glow-circle glow-1"></div>
+        <div class="glow-circle glow-2"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <a href="index.html" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+                <img src="elvrona-group/logo.png" alt="Elvrona logo">
+                <span>ELVRONA</span>
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html" data-i18n="nav_about">About</a></li>
+                <li><a href="portfolio.html" data-i18n="nav_ecosystem">Our Ecosystem</a></li>
+                <li><a href="vision.html" data-i18n="nav_vision">Vision</a></li>
+                <li><a href="contact.html" class="active" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <div class="lang-switcher">
+                <div class="flag-container">
+                    <img src="https://flagcdn.com/w40/gb.png" alt="EN" class="flag-icon" data-lang="en">
+                    <img src="https://flagcdn.com/w40/de.png" alt="DE" class="flag-icon" data-lang="de">
+                    <img src="https://flagcdn.com/w40/sa.png" alt="AR" class="flag-icon" data-lang="ar">
+                    <img src="https://flagcdn.com/w40/fr.png" alt="FR" class="flag-icon" data-lang="fr">
+                    <img src="https://flagcdn.com/w40/es.png" alt="ES" class="flag-icon" data-lang="es">
+                    <img src="https://flagcdn.com/w40/it.png" alt="IT" class="flag-icon" data-lang="it">
+                    <img src="https://flagcdn.com/w40/ru.png" alt="RU" class="flag-icon" data-lang="ru">
+                    <img src="https://flagcdn.com/w40/cn.png" alt="ZH" class="flag-icon" data-lang="zh">
+                    <img src="https://flagcdn.com/w40/jp.png" alt="JA" class="flag-icon" data-lang="ja">
+                    <img src="https://flagcdn.com/w40/tr.png" alt="TR" class="flag-icon" data-lang="tr">
+                </div>
+            </div>
+            <a href="portfolio.html" class="btn btn-primary" data-i18n="nav_projects">Our Projects</a>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="section" style="padding-top: 150px; padding-bottom: 50px;">
+        <div class="container" data-aos="fade-up">
+            <div class="section-badge" data-i18n="contact_badge">Get in Touch</div>
+            <h1 class="hero-title" style="font-size: 3.5rem;" data-i18n="contact_title">Become a <br><span>Partner</span></h1>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="section">
+        <div class="container">
+            <div class="portfolio-grid" style="grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: center;">
+                <div class="about-text" data-aos="fade-right">
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); margin-bottom: 2rem;" data-i18n="contact_text">
+                        Whether you are interested in a strategic partnership, have questions about our neural infrastructure, or want to join our growing research team, we are ready to connect.
+                    </p>
+                    <div style="font-size: 1.1rem; color: var(--text-primary);">
+                        <p style="margin-bottom: 1rem;"><strong style="color: var(--accent-primary);" data-i18n="contact_loc_label">Location:</strong> Germany</p>
+                        <p style="margin-bottom: 1rem;"><strong style="color: var(--accent-primary);" data-i18n="contact_email_label">Email:</strong> <a href="mailto:info@wakil-rd.de" style="color: inherit; text-decoration: none;">info@wakil-rd.de</a></p>
+                    </div>
+                </div>
+                <div class="network-card" data-aos="fade-left" style="padding: 2.5rem; text-align: left;">
+                    <form id="contactForm" action="#" method="POST" style="display: grid; gap: 1.5rem;">
+                        <div style="display: grid; gap: 0.5rem;">
+                            <label for="name" style="font-size: 0.8rem; color: var(--text-secondary);" data-i18n="form_name_label">Your Name</label>
+                            <input type="text" id="name" name="name" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; color: var(--text-primary); border-radius: 8px;" placeholder="Full Name" data-i18n-placeholder="form_name_placeholder" required>
+                        </div>
+                        <div style="display: grid; gap: 0.5rem;">
+                            <label for="email" style="font-size: 0.8rem; color: var(--text-secondary);" data-i18n="form_email_label">Your Email</label>
+                            <input type="email" id="email" name="email" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; color: var(--text-primary); border-radius: 8px;" placeholder="example@domain.com" data-i18n-placeholder="form_email_placeholder" required>
+                        </div>
+                        <div style="display: grid; gap: 0.5rem;">
+                            <label for="message" style="font-size: 0.8rem; color: var(--text-secondary);" data-i18n="form_msg_label">Message</label>
+                            <textarea id="message" name="message" rows="4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; color: var(--text-primary); border-radius: 8px; resize: none;" placeholder="How can we help you?" data-i18n-placeholder="form_msg_placeholder" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="form_btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">
+                    <img src="elvrona-group/logo.png" alt="Elvrona logo" style="width: 30px;">
+                    <span>ELVRONA</span>
+                </div>
+                <p data-i18n="footer_text">Strategic Holding & Innovation Group. Overseeing the development of high-performance AI systems. Architecture by Abdulrahman Alshouly.</p>
+                <p style="margin-top: 1rem; font-size: 0.75rem;">Wakil R&D — Registered in Germany | <a href="mailto:info@wakil-rd.de" style="color: inherit; text-decoration: none; opacity: 0.8;">info@wakil-rd.de</a></p>
+            </div>
+            <div class="footer-links">
+                <div class="link-col">
+                    <h4 data-i18n="footer_company">Company</h4>
+                    <a href="about.html" data-i18n="footer_about">About</a>
+                    <a href="vision.html" data-i18n="footer_vision">Vision</a>
+                </div>
+                <div class="link-col">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <a href="privacy.html" data-i18n="footer_privacy">Privacy</a>
+                    <a href="terms.html" data-i18n="footer_terms">Terms</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer_copyright">&copy; 2026 Elvrona Group. All Rights Reserved. | Dedicated to Excellence and Innovation.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+        lucide.createIcons();
+
+        // Contact Form Handler
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = contactForm.querySelector('button');
+                const originalText = btn.innerHTML;
+                
+                // Show loading state
+                btn.innerHTML = `<span style="padding: 0 1rem;">Sending...</span>`;
+                btn.disabled = true;
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value
+                };
+
+                // Use the main API server address if testing from port 5500
+                const apiBase = window.location.port !== '8080' ? 'http://localhost:8080' : '';
+
+                try {
+                    const response = await fetch(`${apiBase}/api/contact`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert('Message sent successfully! Elvrona Group will contact you soon.');
+                        contactForm.reset();
+                    } else {
+                        alert('Error: ' + result.error);
+                    }
+                } catch (err) {
+                    console.error('Submission error:', err);
+                    alert('Could not connect to the server. Please try again later.');
+                } finally {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+

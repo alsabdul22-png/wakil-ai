@@ -1,0 +1,21 @@
+# Allow images for branding
+# DO NOT ignore png/jpg generally
+
+**/node_modules/
+**/.next/
+**/.vercel/
+**/.git/
+**/dist/
+**/build/
+**/out/
+
+# Database and secrets
+**/*.db
+**/*.sqlite
+**/*.env
+**/*.env.*
+
+# Only ignore huge archives, keep the logos!
+**/*.zip
+**/*.mp4
+**/*.mov

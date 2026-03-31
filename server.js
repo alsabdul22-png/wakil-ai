@@ -69,17 +69,38 @@ app.post('/api/images', async (req, res) => {
     const buffer = Buffer.from(arrayBuffer);
     const b64_json = buffer.toString('base64');
     
-    // Return to the frontend using the exact OpenAI-compatible structure it already expects!
     res.json({ data: [{ b64_json }] });
-
   } catch (err) {
     console.error('Image API Error:', err.message);
     res.status(500).json({ error: { message: 'Internal Server Error fetching from Hugging Face API' }});
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🚀 AI Studio Server running!`);
-  console.log(`🌍 Open in browser: http://localhost:${PORT}`);
-  console.log(`========================================\n`);
+// --- Contact Form Submission ---
+app.post('/api/contact', (req, res) => {
+  const { name, email, message } = req.body;
+  
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'Please provide all fields' });
+  }
+
+  // Log for now (In production you would send an email or save to DB)
+  console.log('--- NEW CONTACT REQUEST ---');
+  console.log('Name:', name);
+  console.log('Email:', email);
+  console.log('Message:', message);
+  console.log('---------------------------');
+
+  res.json({ success: true, message: 'Message received by Elvrona Group' });
 });
+
+
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 AI Studio Server running!`);
+    console.log(`🌍 Open in browser: http://localhost:${PORT}`);
+    console.log(`========================================\n`);
+  });
+}
