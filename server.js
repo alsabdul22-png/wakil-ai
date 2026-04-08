@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const BARADA_BASE_URL = 'https://www.barada.cloud/api';
+const SOVEREIGN_NEURAL_ENDPOINT = 'https://www.barada.cloud/api';
 
 // Serve static frontend files (index.html, css, js)
 app.use(express.static(__dirname));
@@ -17,11 +17,11 @@ app.use(cors());
 // --- Proxy Chat Completions ---
 app.post('/api/chat', async (req, res) => {
   try {
-    const response = await fetch(`${BARADA_BASE_URL}/v1/chat/completions`, {
+    const response = await fetch(`${SOVEREIGN_NEURAL_ENDPOINT}/v1/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.BARADA_API_KEY}`
+        'Authorization': `Bearer ${process.env.ELVRONA_NEURAL_AUTH}`
       },
       body: JSON.stringify(req.body)
     });

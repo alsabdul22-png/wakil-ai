@@ -19,3 +19,4 @@ out/
 /wakil-ai-tech/node_modules/
 
 .vercel
+.env*.local

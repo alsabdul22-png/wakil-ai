@@ -19,3 +19,11 @@
 **/*.zip
 **/*.mp4
 **/*.mov
+
+# Separate projects (deployed independently)
+Wakil/
+wakil-ai/
+wakil-desktop/
+wakil-ai-tech/
+robot-app/
+wakil baeada ai webseit/

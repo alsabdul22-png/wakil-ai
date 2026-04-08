@@ -11,9 +11,12 @@
     "install:all": "npm install && npm install --prefix wakil-desktop && npm install --prefix wakil-ai"
   },
   "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3",
     "node-fetch": "^2.7.0"
   }
 }
